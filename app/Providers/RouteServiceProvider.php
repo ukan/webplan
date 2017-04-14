@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -35,27 +36,51 @@ class RouteServiceProvider extends ServiceProvider
      * @param  \Illuminate\Routing\Router  $router
      * @return void
      */
-    public function map(Router $router)
+    public function map(Router $router, Request $request)
     {
-        $this->mapWebRoutes($router);
+        $locale = $request->segment(1);
+
+        if (in_array($locale, $this->app->config->get('app.skip_locales'))) {
+            $this->skippedLocaleRoutes($router);
+            $locale = $this->app->config->get('app.locale');
+        } else {
+            $this->localeRoutes($router, $locale);
+        }
+        $this->app->setLocale($locale);
 
         //
     }
 
     /**
-     * Define the "web" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @param  \Illuminate\Routing\Router  $router
+     * Add a locale prefix to routes
+     * @param  \Illuminate\Routing\Router $router $router
+     * @param  string $locale
      * @return void
      */
-    protected function mapWebRoutes(Router $router)
+    private function localeRoutes($router, $locale)
     {
-        $router->group([
-            'namespace' => $this->namespace, 'middleware' => 'web',
-        ], function ($router) {
-            require app_path('Http/routes.php');
+        $this->app->setLocale($locale);
+
+        $router->group(['namespace' => $this->namespace, 'middleware' => 'web', 'prefix' => $locale], function ($router) {
+            require app_path('Http/Route/frontend/frontend.php');
+        });
+    }
+
+    /**
+     * Map routes without locale prefix
+     * @param  \Illuminate\Routing\Router $router
+     * @return void
+     */
+    private function skippedLocaleRoutes($router)
+    {
+        $router->group(['namespace' => $this->namespace,'middleware' => 'web'], function ($router) {
+            require app_path('Http/Route/auth/auth.php');
+            require app_path('Http/Route/backend/admin/admin.php');
+            require app_path('Http/Route/backend/admin/datatables.php');
+            
+            //API/v1
+            require app_path('Http/Route/API/v1/auth/auth.php');
+            require app_path('Http/Route/API/v1/frontend/user.php');
         });
     }
 }

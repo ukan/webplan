@@ -64,8 +64,10 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
-
-    'locale' => 'en',
+    'locales' => ['en' => 'English', 'in' => 'Indonesia'],
+    'skip_locales' => ['admin', 'api'],
+    
+    // 'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -156,6 +158,32 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * Third Party Service Providers...
+         */
+        Collective\Html\HtmlServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
+        Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
+        
+        Intervention\Image\ImageServiceProvider::class,
+        Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
+
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
+
+        Skovmand\Mailchimp\MailchimpServiceProvider::class,
+
+        Unisharp\Ckeditor\ServiceProvider::class,
+        Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
+
+        Spatie\Tail\TailServiceProvider::class,
+        /*lib-import from excel*/
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        Barryvdh\Snappy\ServiceProvider::class,
+        DidierDeMaeyer\MultipleLocales\Providers\MultipleLocalesServiceProvider::class,
     ],
 
     /*
@@ -202,6 +230,31 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /**
+         * Third Party Class Aliases...
+         */
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
+        'Reminder' => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
+        'Sentinel' => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
+        'Flash' => Laracasts\Flash\Flash::class,
+        'General' => App\General::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
+
+        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+
+        /*add library import from excel*/
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'Input'     => Illuminate\Support\Facades\Input::class,
     ],
 
 ];

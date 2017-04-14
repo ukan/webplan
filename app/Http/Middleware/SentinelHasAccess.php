@@ -3,28 +3,31 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use General;
+use Sentinel;
+use App\Models\User;
 
-class Authenticate
+class SentinelHasAccess
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string|null  $guard
+     * @param  string    $permission
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next, $permission)
     {
-        if (Auth::guard($guard)->guest()) {
+        if (! has_access($permission)) {
             if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('login');
+                return response('Unauthorized.', 403);
             }
+
+            return response()->view('backend.unauthorized');
         }
 
         return $next($request);
+
     }
 }
