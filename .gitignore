@@ -6,3 +6,5 @@ Homestead.json
 .env
 .well-known
 cgi-bin
+server.php
+composer.lock
