@@ -37,8 +37,6 @@ class MigrationCartalystSentinel extends Migration
             $table->boolean('completed')->default(0);
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
-
-            $table->engine = 'InnoDB';
         });
 
         Schema::create('persistences', function (Blueprint $table) {
@@ -47,7 +45,6 @@ class MigrationCartalystSentinel extends Migration
             $table->string('code');
             $table->timestamps();
 
-            $table->engine = 'InnoDB';
             $table->unique('code');
         });
 
@@ -58,8 +55,6 @@ class MigrationCartalystSentinel extends Migration
             $table->boolean('completed')->default(0);
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
-
-            $table->engine = 'InnoDB';
         });
 
         Schema::create('roles', function (Blueprint $table) {
@@ -68,18 +63,14 @@ class MigrationCartalystSentinel extends Migration
             $table->string('name');
             $table->text('permissions')->nullable();
             $table->timestamps();
-
-            $table->engine = 'InnoDB';
             $table->unique('slug');
+            $table->boolean('is_super_admin')->default(false);
         });
 
         Schema::create('role_users', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
             $table->nullableTimestamps();
-
-            $table->engine = 'InnoDB';
-            $table->primary(['user_id', 'role_id']);
         });
 
         Schema::create('throttle', function (Blueprint $table) {
@@ -88,9 +79,6 @@ class MigrationCartalystSentinel extends Migration
             $table->string('type');
             $table->string('ip')->nullable();
             $table->timestamps();
-
-            $table->engine = 'InnoDB';
-            $table->index('user_id');
         });
 
         Schema::create('users', function (Blueprint $table) {
@@ -101,9 +89,15 @@ class MigrationCartalystSentinel extends Migration
             $table->timestamp('last_login')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('phone',20)->nullable();
+            $table->string('username')->nullable();
+            $table->text('address')->nullable();
+            $table->boolean('is_admin')->nullable()->default(false);
+            $table->string('forgot_token')->nullable();
+            $table->string('gender')->nullable();
             $table->timestamps();
 
-            $table->engine = 'InnoDB';
             $table->unique('email');
         });
     }
