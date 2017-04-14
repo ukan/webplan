@@ -21,8 +21,6 @@ class HomeController extends Controller
     }
     public function index()
     {   
-        
-        dd("dsd");
         return view('frontend.dashboard.home');
     }
     public function sign_in(){
