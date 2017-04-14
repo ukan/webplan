@@ -1,0 +1,33 @@
+{
+    "name": "didierdemaeyer/laravel-multiple-locales",
+    "type": "library",
+    "description": "Multiple Locales package for Laravel 5.2",
+    "keywords": [
+        "laravel",
+        "didierdemaeyer",
+        "laravel-multiple-locales",
+        "multiple locales",
+        "locales",
+        "languages"
+    ],
+    "homepage": "https://github.com/didierdemaeyer/laravel-multiple-locales",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Didier De Maeyer",
+            "email": "didierdemaeyer@telenet.be",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "illuminate/support": "~5.2",
+        "illuminate/contracts": "~5.2",
+        "php" : "~5.5|~7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DidierDeMaeyer\\MultipleLocales\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
